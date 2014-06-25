@@ -10,6 +10,7 @@ public class PlayScreen implements Screen {
 
 	private WorldRenderer renderer;
 	private World world;
+	private Controls controls;
 	
 	private int width, height;
 	
@@ -18,6 +19,7 @@ public class PlayScreen implements Screen {
 	public void render(float delta) {
 		Gdx.gl.glClearColor(0.1f, 0.1f, 0.1f, 1);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		
 		renderer.render();
 	}
 
@@ -34,6 +36,10 @@ public class PlayScreen implements Screen {
 	@Override
 	public void show() {
 		world = new World();
+		controls = new Controls(world);
+		//Register our controls object as our input processor
+		Gdx.input.setInputProcessor(controls);
+		demoWorld();
 		renderer = new WorldRenderer(world);
 	}
 
@@ -55,6 +61,10 @@ public class PlayScreen implements Screen {
 	@Override
 	public void dispose() {
 		
+	}
+	
+	public void demoWorld(){
+		world.setPlayerCircle(100,100,100);
 	}
 
 }

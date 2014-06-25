@@ -5,18 +5,15 @@ import com.badlogic.gdx.utils.Array;
 
 public class World {
 	
-	Array<Circle> circles = new Array<Circle>();
+	Circle playerCircle;
 	
-	public World(){
-		
-	}
-	public Array<Circle> getCircles(){
-		return this.circles;
+	
+	public Circle getPlayerCircle(){
+		return this.playerCircle;
 	}
 	
-	public void setCircle(float x, float y, float rad){
-		Circle circle = new Circle(x,y,rad);
-		this.circles.add(circle);
+	public void setPlayerCircle(float x, float y, float rad){
+		playerCircle = new Circle(x,y,rad);
 	}
 
 }
