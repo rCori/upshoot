@@ -1,5 +1,6 @@
 package com.me.upshoot.view;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -9,11 +10,12 @@ import com.me.upshoot.models.World;
 
 public class WorldRenderer {
 
-	private static final float CAMERA_HEIGHT = 800f;
+	
+	private static final float CAMERA_HEIGHT = 640f;
 	private static final float CAMERA_WIDTH = 480f;
 	
 	private World world;
-	private OrthographicCamera cam;
+	public static OrthographicCamera cam;
 	
 	private ShapeRenderer shapeRenderer;
 	private Player player;
@@ -23,8 +25,8 @@ public class WorldRenderer {
 		this.shapeRenderer = new ShapeRenderer();
 		this.world = world;
 		this.player = player;
-		this.cam = new OrthographicCamera();
-		this.cam.setToOrtho(false,CAMERA_WIDTH,CAMERA_HEIGHT);
+		this.cam = new OrthographicCamera(CAMERA_WIDTH, CAMERA_HEIGHT);
+		this.cam.setToOrtho(false, CAMERA_WIDTH, CAMERA_HEIGHT);
 		this.cam.update();
 	}
 	

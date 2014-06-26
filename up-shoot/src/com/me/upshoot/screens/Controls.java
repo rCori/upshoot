@@ -3,6 +3,7 @@ package com.me.upshoot.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.me.upshoot.models.Player;
+import com.me.upshoot.models.Player.State;
 import com.me.upshoot.models.World;
 
 public class Controls implements InputProcessor{
@@ -35,8 +36,7 @@ public class Controls implements InputProcessor{
 
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
-		player.getAcceleration().y = Player.JUMP_ACCELERATION;
-		
+		player.launch(x,y);
 		return true;
 	}
 
