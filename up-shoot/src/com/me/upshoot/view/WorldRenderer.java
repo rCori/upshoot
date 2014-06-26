@@ -5,14 +5,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
+import com.me.upshoot.models.Block;
 import com.me.upshoot.models.Player;
 import com.me.upshoot.models.World;
 
 public class WorldRenderer {
 
 	
-	private static final float CAMERA_HEIGHT = 640f;
-	private static final float CAMERA_WIDTH = 480f;
+	public static final float CAMERA_HEIGHT = 640f;
+	public static final float CAMERA_WIDTH = 480f;
 	
 	private World world;
 	public static OrthographicCamera cam;
@@ -39,8 +40,18 @@ public class WorldRenderer {
 		shapeRenderer.end();
 	}
 	
+	public void drawBlocks(){
+		for(Block block: world.getBlocks()){
+			shapeRenderer.setProjectionMatrix(cam.combined);
+			shapeRenderer.setColor(0, 1, 0, 1);
+			shapeRenderer.begin(ShapeType.FilledRectangle);
+			shapeRenderer.filledRect(block.getPosition().x, block.getPosition().y, block.getWidth(), block.getHeight());
+			shapeRenderer.end();
+		}
+	}
+	
 	public void render(){
-		//drawPlayerCircle();
+		drawBlocks();
 		drawPlayer();
 	}
 	
