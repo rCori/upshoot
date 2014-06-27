@@ -10,10 +10,17 @@ public class World {
 
 	int timer = 250;
 	
+	Player player;
+	
+	public World(Player player){
+		this.player = player;
+	}
+	
 	public void update(float delta){
 		addBlock(delta);
 		for(Block block:blocks){
 			block.update(delta);
+			block.checkCollision(player);
 		}
 		removeBlock();
 	}

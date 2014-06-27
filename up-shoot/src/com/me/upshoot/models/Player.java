@@ -1,6 +1,7 @@
 package com.me.upshoot.models;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.me.upshoot.view.WorldRenderer;
@@ -16,6 +17,7 @@ public class Player {
 	Vector2 acceleration = new Vector2();
 	State state = State.GROUND;
 	float radius;
+	Rectangle hitBox = new Rectangle();
 	
 	public static final float JUMP_VELOCITY = 5f;
 	public static final float GRAV_ACCELERATION = -400f;
@@ -27,6 +29,7 @@ public class Player {
 		this.velocity.set(0f,0f);
 		this.acceleration.set(0f,0f);
 		this.radius = PLAYER_RADIUS;
+		this.hitBox.set(this.position.x-this.radius, this.position.y-this.radius, this.radius*2, this.radius*2);
 		
 	}
 	
@@ -54,7 +57,9 @@ public class Player {
 		return this.radius;
 	}
 	
-	
+	public Rectangle getHitBox(){
+		return this.hitBox;
+	}
 	
 	public void launch(int x, int y){
 		if(this.getState().equals(State.GROUND)){
@@ -62,14 +67,7 @@ public class Player {
 			WorldRenderer.cam.unproject(pos);
 			float xDiff = pos.x - this.getPosition().x;
 			float yDiff = pos.y - this.getPosition().y;
-			Gdx.app.log("upshoot", "xPosition: " + this.getPosition().x);
-			Gdx.app.log("upshoot", "yPosition: " + this.getPosition().y);
-			
-			Gdx.app.log("upshoot", "pos.x: " + pos.x);
-			Gdx.app.log("upshoot", "pos.y: " + pos.y);
-			
-			Gdx.app.log("upshoot", "xDiff: " + xDiff);
-			Gdx.app.log("upshoot", "yDiff: " + yDiff);
+
 			this.getVelocity().x = xDiff * Player.JUMP_VELOCITY;
 			this.getVelocity().y = yDiff * Player.JUMP_VELOCITY;
 			this.setState(State.AIR);
@@ -81,10 +79,13 @@ public class Player {
 		//this.getPosition().y += (this.getVelocity().y * delta);
 		position.add(velocity.tmp().mul(delta));
 		
-		this.getVelocity().x += (this.getAcceleration().x * delta);
-		this.getVelocity().y += (this.getAcceleration().y * delta);
+		//this.getVelocity().x += (this.getAcceleration().x * delta);
+		//this.getVelocity().y += (this.getAcceleration().y * delta);
+		velocity.add(acceleration.tmp().mul(delta));
 		
 		this.getAcceleration().y = GRAV_ACCELERATION;
+		hitBox.setX(position.x-radius);
+		hitBox.setY(position.y-radius);
 		//Keep me from falling through the ground.
 		if(this.getPosition().y < 20){
 			this.getPosition().y = 20;

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Rectangle;
 import com.me.upshoot.models.Block;
 import com.me.upshoot.models.Player;
 import com.me.upshoot.models.World;
@@ -40,6 +41,15 @@ public class WorldRenderer {
 		shapeRenderer.end();
 	}
 	
+	public void drawPlayerHitBox(){
+		Rectangle hitBox = player.getHitBox();
+		shapeRenderer.setProjectionMatrix(cam.combined);
+		shapeRenderer.setColor(0, 0, 1, 1);
+		shapeRenderer.begin(ShapeType.Rectangle);
+		shapeRenderer.rect(hitBox.getX(), hitBox.getY(), hitBox.getWidth(), hitBox.getHeight());
+		shapeRenderer.end();
+	}
+	
 	public void drawBlocks(){
 		for(Block block: world.getBlocks()){
 			shapeRenderer.setProjectionMatrix(cam.combined);
@@ -50,9 +60,22 @@ public class WorldRenderer {
 		}
 	}
 	
+	public void drawBlocksHitBoxes(){
+		for(Block block: world.getBlocks()){
+			Rectangle rect = block.getHitBox();
+			shapeRenderer.setProjectionMatrix(cam.combined);
+			shapeRenderer.setColor(0, 0, 1, 1);
+			shapeRenderer.begin(ShapeType.Rectangle);
+			shapeRenderer.rect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
+			shapeRenderer.end();
+		}
+	}
+	
 	public void render(){
 		drawBlocks();
 		drawPlayer();
+		//drawPlayerHitBox();
+		//drawBlocksHitBoxes();
 	}
 	
 	public void setSize(int width, int height){

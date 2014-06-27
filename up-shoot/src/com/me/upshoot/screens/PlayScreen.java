@@ -41,7 +41,7 @@ public class PlayScreen implements Screen {
 	@Override
 	public void show() {
 		player = new Player(new Vector2(100f,100f));
-		world = new World();
+		world = new World(player);
 		controls = new Controls(world, player);
 		//Register our controls object as our input processor
 		Gdx.input.setInputProcessor(controls);
