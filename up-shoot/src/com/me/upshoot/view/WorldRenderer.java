@@ -2,6 +2,8 @@ package com.me.upshoot.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
@@ -22,6 +24,8 @@ public class WorldRenderer {
 	private ShapeRenderer shapeRenderer;
 	private Player player;
 	
+	private SpriteBatch batch;
+	private BitmapFont font;
 	
 	public WorldRenderer(World world, Player player){
 		this.shapeRenderer = new ShapeRenderer();
@@ -30,6 +34,10 @@ public class WorldRenderer {
 		this.cam = new OrthographicCamera(CAMERA_WIDTH, CAMERA_HEIGHT);
 		this.cam.setToOrtho(false, CAMERA_WIDTH, CAMERA_HEIGHT);
 		this.cam.update();
+		this.batch = new SpriteBatch();
+		this.font = new BitmapFont();
+		this.font.scale(8f);
+		
 	}
 	
 	
@@ -74,14 +82,18 @@ public class WorldRenderer {
 	public void render(){
 		drawBlocks();
 		drawPlayer();
-		//drawPlayerHitBox();
-		//drawBlocksHitBoxes();
+		drawScore();
 	}
 	
 	public void setSize(int width, int height){
 		//Umm, like nothin
 	}
 	
-	
+	public void drawScore(){
+		int score = world.getScore();
+		this.batch.begin();
+		this.font.draw(this.batch, Integer.toString(score), 400,400);
+		this.batch.end();
+	}
 	
 }
