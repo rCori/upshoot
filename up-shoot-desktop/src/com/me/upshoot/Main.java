@@ -10,6 +10,7 @@ public class Main {
 		cfg.width = 480;
 		cfg.height = 640;
 		
+		
 		new LwjglApplication(new UpShoot(), cfg);
 	}
 }

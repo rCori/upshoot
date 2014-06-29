@@ -1,9 +1,7 @@
 package com.me.upshoot.models;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Intersector;
 
 public class Block {
 

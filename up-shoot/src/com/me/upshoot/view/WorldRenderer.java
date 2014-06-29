@@ -1,13 +1,12 @@
 package com.me.upshoot.view;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.me.upshoot.models.Block;
 import com.me.upshoot.models.Player;
 import com.me.upshoot.models.World;
@@ -31,12 +30,12 @@ public class WorldRenderer {
 		this.shapeRenderer = new ShapeRenderer();
 		this.world = world;
 		this.player = player;
-		this.cam = new OrthographicCamera(CAMERA_WIDTH, CAMERA_HEIGHT);
-		this.cam.setToOrtho(false, CAMERA_WIDTH, CAMERA_HEIGHT);
-		this.cam.update();
+		WorldRenderer.cam = new OrthographicCamera(CAMERA_WIDTH, CAMERA_HEIGHT);
+		WorldRenderer.cam.setToOrtho(false, CAMERA_WIDTH, CAMERA_HEIGHT);
+		WorldRenderer.cam.update();
 		this.batch = new SpriteBatch();
 		this.font = new BitmapFont();
-		this.font.scale(8f);
+		this.font.scale(2f);
 		
 	}
 	
@@ -91,8 +90,12 @@ public class WorldRenderer {
 	
 	public void drawScore(){
 		int score = world.getScore();
+		int x = (int)CAMERA_WIDTH/2;
+		int y = 600;
+		Vector3 temp = new Vector3(x,y,0);
+		cam.project(temp);
 		this.batch.begin();
-		this.font.draw(this.batch, Integer.toString(score), 400,400);
+		this.font.draw(this.batch, Integer.toString(score), temp.x, temp.y);
 		this.batch.end();
 	}
 	

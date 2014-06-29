@@ -1,6 +1,7 @@
 package com.me.upshoot.models;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -11,6 +12,8 @@ public class Player {
 	public enum State{
 		GROUND, AIR
 	}
+	
+	Sound collideSound = Gdx.audio.newSound(Gdx.files.internal("data/mechanical-clonk-1.wav"));
 	
 	Vector2 position = new Vector2();
 	Vector2 velocity = new Vector2();
@@ -75,12 +78,8 @@ public class Player {
 	}
 	
 	public void update(float delta){
-		//this.getPosition().x += (this.getVelocity().x * delta);
-		//this.getPosition().y += (this.getVelocity().y * delta);
 		position.add(velocity.tmp().mul(delta));
 		
-		//this.getVelocity().x += (this.getAcceleration().x * delta);
-		//this.getVelocity().y += (this.getAcceleration().y * delta);
 		velocity.add(acceleration.tmp().mul(delta));
 		
 		this.getAcceleration().y = GRAV_ACCELERATION;
@@ -89,23 +88,27 @@ public class Player {
 		//Keep me from falling through the ground.
 		if(this.getPosition().y < 20){
 			this.getPosition().y = 20;
+			if(this.getVelocity().y < -150) collideSound.play();
 			this.getVelocity().y *= -DAMP;
 			this.setState(State.GROUND);
 		}
 		
 		if(this.getPosition().y > 640){
 			this.getPosition().y = 640;
+			if(this.getVelocity().y > 150) collideSound.play();
 			this.getVelocity().y *= -DAMP;
 			this.setState(State.GROUND);
 		}
 		
 		if(this.getPosition().x < 20){
 			this.getPosition().x = 20;
+			if(this.getVelocity().x < -150) collideSound.play();
 			this.getVelocity().x *= -DAMP;
 			this.setState(State.GROUND);
 		}
 		if(this.getPosition().x > 460){
 			this.getPosition().x = 460;
+			if(this.getVelocity().x > 150) collideSound.play();
 			this.getVelocity().x *= -DAMP;
 			this.setState(State.GROUND);
 		}
